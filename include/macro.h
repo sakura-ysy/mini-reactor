@@ -1,0 +1,2 @@
+#define MAX_EVENTS 500
+#define MAX_LISTENFD 8
