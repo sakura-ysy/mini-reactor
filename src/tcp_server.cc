@@ -9,11 +9,16 @@ TcpServer::TcpServer(Epoll* epoll)
 
 TcpServer::~TcpServer() {
 
-}     
+} 
 
 
 void TcpServer::Start() {
   acceptor_ = new Acceptor(epoll_);
   acceptor_->Start();
+  acceptor_->SetUser(user_);
   epoll_->Loop();
+}
+
+void TcpServer::SetUser(ServerUser* user) {
+  user_ = user;
 }

@@ -2,5 +2,5 @@
 // Accpetor和TpcConnection分别继承
 class ChannelHandler {
 public:
-  void virtual onIn(int sockfd) = 0;
+  void virtual OnIn(int sockfd) = 0;
 };

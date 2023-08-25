@@ -24,6 +24,10 @@ void Acceptor::Start() {
   channel_->Update();
 }
 
+void Acceptor::SetUser(ServerUser* user) {
+  user_ = user;
+}
+
 void Acceptor::BindAndListen() {
   int on = 1;
   listenfd_ = socket(AF_INET, SOCK_STREAM, 0);
@@ -43,7 +47,7 @@ void Acceptor::BindAndListen() {
   }
 }
 
-void Acceptor::onIn(int sockfd) {
+void Acceptor::OnIn(int sockfd) {
   int connfd;
   struct sockaddr_in cliaddr;
   socklen_t clilen = sizeof(sockaddr_in);
@@ -61,10 +65,12 @@ void Acceptor::onIn(int sockfd) {
 
   fcntl(connfd, F_SETFL, O_NONBLOCK);  // no-block io
 
-  newConnection(connfd);
+  NewConnection(connfd);
 }
 
-void Acceptor::newConnection(int sockfd) {
+void Acceptor::NewConnection(int sockfd) {
   TcpConnection* tcp = new TcpConnection(epoll_, sockfd);
-  // todo
+  tcp->SetUser(user_);
+  connections_[sockfd] = tcp;
 }
+

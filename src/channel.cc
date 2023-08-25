@@ -8,6 +8,10 @@ Channel::Channel(Epoll* epoll, int sockfd)
 
 }
 
+Channel::~Channel() {
+
+}
+
 int Channel::GetSockfd() {
   return sockfd_;
 }
@@ -34,6 +38,6 @@ void Channel::Update() {
 
 void Channel::HandleRevent() {
   if (revent_ & EPOLLIN) {
-
+    handler_->OnIn(sockfd_);
   }
 }

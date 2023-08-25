@@ -3,6 +3,8 @@
 #include <epoll.h>
 #include <macro.h>
 #include <channel_handler.h>
+#include <unordered_map>
+#include <server_user.h>
 
 using namespace std;
 
@@ -13,14 +15,18 @@ public:
 
   void Start();
 
-  void onIn(int sockfd) override;
+  void OnIn(int sockfd) override;
+
+  void SetUser(ServerUser* user);
 
 private:
   void BindAndListen();
 
-  void newConnection(int sockfd);
+  void NewConnection(int sockfd);
 
   int listenfd_;
   Channel* channel_;
   Epoll* epoll_;
+  unordered_map<int, TcpConnection*> connections_;
+  ServerUser* user_;
 };

@@ -1,2 +1,3 @@
 #define MAX_EVENTS 500
 #define MAX_LISTENFD 8
+#define MAX_LINE 100
